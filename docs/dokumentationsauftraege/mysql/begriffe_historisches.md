@@ -66,6 +66,7 @@ Bei Transaktionen können aber nun folgende Probleme auftreten:
 * **Phantom Read:** Suchkriterien treffen während einer Transaktion auf unterschiedliche Datensätze zu, weil eine (während des Ablaufs dieser Transaktion laufende) andere Transaktion Datensätze hinzugefügt, entfernt oder verändert hat.
 
 Bei folgenden der 4 oben genannten Punkten kann an gewissen Orten etwas eingeschränkt werden, damit die performance verbesstert wird. Jedoch kann hier die Konsistenz der Daten drastisch abnehmen.
+
 ![Performance SQL](performanceSQL.png)
 
 ### Praxisbeispiel and PostgreSQL

@@ -1,6 +1,7 @@
 version: '3'
 services:
   docsify:
+    restart: always
     build: ./docker/docsify
     container_name: docsify
     ports:
@@ -12,6 +13,7 @@ services:
     command: docsify serve . -p 10000 --livereload-port 35729
 
   plantuml:
+    restart: always
     image: "plantuml/plantuml-server:jetty"
     container_name: plantuml
     ports:
