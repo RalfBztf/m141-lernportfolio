@@ -171,4 +171,5 @@ show databases;
 ```
 
 Sollte etwas so aussehen:
+
 ![mysql shell](mysql_shell_tests.png)
