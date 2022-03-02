@@ -50,11 +50,25 @@ Die Daten werden im RAM gespeichert und sind somit flüchtig. Die Engine ist abe
 
 #### MRG_MYISAM
 
+Mit der MRG_MYISAM oder auch MERGE-Engine genannt, kann man identische MYISAM Tabellen zusammenführen. Identisch heisst, dass die Spaltendatentypen und Indexinformationen (z.B Spaltenreihenfolge) genau gleich sein muss.
+
 #### PERFORMANCE_SCHEMA
+
+In MySQL gibt es eine Datenbank ```performance_schema``` welche die Storage-Engine PERFORMANCE_SCHEMA nutzt. Sie ist eine In-Memory Datenbank (wird gelöscht nach Server neustart) und ist zuständig für minimale Überwachung des Datenbank servers.  Man kann in der Tabelle die ganzen Informationen mit einfachen SELECTs abfragen. Beispiele dafür sind:
+
+* Errors
+* Variablen
+* Infos zu Events (z.B SQL-Asuführungen)
+* und vieles mehr
+
+Diese Engine ist in den neueren Version per Default aktiviert und müsste in ```/etc/mysql/my.cnf``` deaktiviert werden, falls man diese nicht verwenden will.
 
 ### Anwendung einer Engine
 
-Die Anwendung einer Engine auf eine Tabele funktioniert wie folgt:
+Die Anwendung einer Engine auf eine Tabele funktioniert wie folgt: 
+
+Inauen fragen, verstehe frage nicht ganz.
+
 
 ## Benutzer und Berechtigungen
 
@@ -66,25 +80,87 @@ MySQL-Shell starten:
 sudo mysql
 ```
 
+Demodatenbank mit 2 Tabellen erstellen:
+
 ```sql
 CREATE DATABASE demoDB;
-CREATE TABLE()
+USE demoDB;
+CREATE TABLE Personen(Vorname varchar(50), Nachname varchar(50));
+CREATE TABLE Produkte(name varchar(100), preis int);
 ```
 
+Tabellen und Attributen anzeigen:
+
+```sql
+SHOW TABLES;
+DESCRIBE Personen;
+DESCRIBE Produkte;
+```
+
+Der ```root``` Benutzer wurde bereits bei der Installation richtig konfiguriert (Passwort gesetzt und Zugriff nur von localhost). Für die Nutzung der Datenbank mit einer Appliaktion sollte aber ein eigener Benutzer verwendet werden.
+
+Benutzer erstellen:
+
+```sql
+CREATE USER 'webapp01'@'localhost' IDENTIFIED BY 'Skjh9w874!';
+```
+
+Berechtigungen anpassen:
+
+```sql
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'webapp01'@'localhost';
+```
+
+Admin-User erstellen:
+
+```sql
+CREATE USER 'admin01'@'localhost' IDENTIFIED BY 'Skjh9w874!';
+```
+
+Berechtigungen setzen (Admin darf alles):
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'admin01'@'localhost' WITH GRANT OPTION;
+```
+
+Berechtigungen übernehmen (falls noch irgendwo etwas gecached ist):
+
+```sql
+FLUSH PRIVILEGES;
+```
+
+Mit neuem User einloggen:
+
+```bash
+mysql -u webapp01 -p
+```
+
+Danach wird man aufgefordert das Passwort einzugeben und die MySQL-Shell öffnet sich. Wir sind nun berechtigt z.B Datenbanken zu erstellen, bearbeiten, löschen, aber dürfen anderen User keine Berechtigungen erteilen.
+
+![webapp01_shell](webapp01_shell.png)
+
+Mit Adminuser einloggen:
+
+```bash
+mysql -u admin01 -p
+```
+
+Danach auch wieder das Passwort eingeben. Nun versuchen wir noch ein User zu erstellen, welcher nur die 4 CRUD Operation ausführen darf. Dies sollte funktionieren, da der ```admin01``` auch Berechtigungen erteilen darf.
+
+```sql
+CREATE USER 'webapp02'@'localhost' IDENTIFIED BY 'Skjh9w874!';
+```
+
+Berechtigungen anpassen:
+
+```sql
+GRANT INSERT, UPDATE, DELETE, SELECT on *.* TO 'webapp02'@'localhost';
+```
+
+![webapp01_shell](admin01_shell.png)
 
 
-    Storage Engines bei MySQL
-        Recherche - Dokumentieren Sie ausführlich die 2 wichtigsten (nicht irgendwelche, die wichtigsten) Storage-Engines unter MySQL
-        Recherche - Listen und beschreiben Sie kurz die restlichen Storage-Engines auf Ihrem System
-        Überlegen Sie sich welche Daten mit welcher Storage Engine gespeichert werden könnten
-        Dokumentieren Sie wie eine Storage Engine auf eine Tabelle angewendet wird
-
-    Benutzer und Berechtigungen
-        Erstellen Sie eine Demo-Datenbank mit zwei Tabellen
-        Root-Benutzer konfiguriert (Login/Passwort)
-        Benutzer konfiguriert (Login/Passwort/Berechtigung auf Datenbank eingeschränkt <- ein Anwendungsbenutzer)
-        Admin-Benutzer konfiguriert (Login/Passwort/Berechtigung auf Datenbank eingeschränkt)
-        Verfizieren Sie Ihre Konfiguration und speichern Sie das Resultat in Ihrer Dokumentation
+---------
 
     Server-Konfiguration
         Transaktions-Isolation : Verfizieren Sie welche Transaktions-Isolation auf Ihrem Server aktiviert ist. Dokumentieren Sie, was das bezüglich den Anomalien für Ihre Installation bedeutet.
