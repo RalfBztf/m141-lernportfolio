@@ -1,6 +1,5 @@
 # MySQL Konfiguration
 
-
 ## Storage Engines
 
 ```InnoDB und MyISAM``` sind die 2 wichtigsten Storage Engines von MySQL. Ein Storage Engine ist dazu da, wie die Daten auf der Festplatte oder im RAM gepseichert werden. 
@@ -12,7 +11,6 @@ Bei MySQL ist die verbreiteste und eine der wichtigsten die InnoDB Engine. Sie u
 ### MyISAM
 
 MyISAM baut auf ISAM (nicht mehr supported) auf. Es war die frühere Engine von MySQL. Allerdings unterstützt sie kein oder nicht komplett das ACID Konzept. Sie bietet jedoch sperre auf Tabellenebene an. Es können keine Transaktionen gemacht werden und es bestehen keine Beziehungen (Fremdschlüssel) in andere Tabellen. Die Engine ist sehr simple, geeignet für Fulltext Search in der DB (InnoDB kann dies heute jedoch auch) und ist performant wenn man hauptsächlich nur Lesen muss und die Datenintegrität nicht so wichtig ist.
-
 
 ### Andere Engines
 
@@ -58,10 +56,37 @@ In MySQL gibt es eine Datenbank ```performance_schema``` welche die Storage-Engi
 
 ### Anwendung einer Engine
 
-Die Anwendung einer Engine auf eine Tabelle funktioniert wie folgt: 
+Engine Auslesen:
 
-Inauen fragen, verstehe frage nicht ganz.
+```mysql
+SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA='pokemon' AND TABLE_NAME='pokemon';
+```
 
+Gibt ```InnoDB``` aus.
+
+MyISAM Tabelle erstellen (Default Engine ist InnoDB):
+
+```mysql
+CREATE TABLE Cars(Id INTEGER PRIMARY KEY, Name VARCHAR(50), Cost INTEGER) ENGINE='MyISAM';
+```
+
+```mysql
+SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA='pokemon' AND TABLE_NAME='Cars';
+```
+
+Sollte ```MyISAM``` ausgeben
+
+Ändern (kann sehr lange dauern):
+
+```msql
+ALTER TABLE Cars ENGINE='InnoDB';
+```
+
+```mysql
+SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA='pokemon' AND TABLE_NAME='Cars';
+```
+
+Die Tabelle sollte nun ```InnoDB``` sein.
 
 ## Benutzer und Berechtigungen
 
