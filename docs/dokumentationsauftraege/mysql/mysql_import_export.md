@@ -12,12 +12,14 @@ mysql -u admin01 -pSkjh9w874! pokemon < pokemon.sql
 
 ### Import CSV-Dump
 
+```sql
 LOAD DATA INFILE '/var/lib/mysql-files/tableName.csv'
 INTO TABLE dbName
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
+```
 
 Das ganze kann natürlich auch über Bash gemacht werden:
 
@@ -61,6 +63,6 @@ mysqldump -u admin01 -pSkjh9w874! --all-databases > dump.sql
 
 Export als CSV mit Pokemons, die einen "fire-punch" als Move durchführen können:
 
-```mysql
+```sql
 select pokemon.pok_name from pokemon inner join pokemon_moves ON pokemon.pok_id = pokemon_moves.pok_id where pokemon_moves.move_id = 7 INTO OUTFILE '/var/lib/mysql-files/pokemon.csv' FIELDS ENCLOSED BY '"' TERMINATED BY ';' LINES TERMINATED BY '\n';
 ```
