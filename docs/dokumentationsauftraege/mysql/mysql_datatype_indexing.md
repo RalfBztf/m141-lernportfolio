@@ -2,7 +2,7 @@
 
 ## Datentypen
 
-Hier eine ganze Liste von MySQL Datentypen. Die meisten Datentypen sind von gleicher Art (z.B INTEGER), aber mit unterschiedlicher Speichergrösse. Je nach Anwendungsfall kann man so viel Speicher sparen. Bei vielen Datentypen kann man auch Optionen angeben z.B bei Fliesskommazahlen wie viel Nachkommastellen es haben darf, bei Integer z.B Zahlen welche keine Vorzeichen haben (unsigned) (also anstatt -128-127, 0-255).
+Hier eine ganze Liste von MySQL Datentypen. Die meisten Datentypen sind von gleicher Art (z.B INTEGER), aber mit unterschiedlicher Speichergrösse. Je nach Anwendungsfall kann man so viel Speicher sparen. Bei vielen Datentypen kann man auch Optionen angeben, z.B bei Fliesskommazahlen wie viel Nachkommastellen es haben darf, bei Integer z.B Zahlen, welche keine Vorzeichen haben (unsigned) (also anstatt -128-127, 0-255).
 Nicht aufgelistet ist hier der ```BOOLEAN```. Für diesen verwendet man oft den ```TINYINT``` und setzt einfach 0 oder 1 ein.
 
 | Datentyp  | Speicherplatz  | Optionen                | Beschreibung                                                                                                                                                                              |
@@ -47,7 +47,7 @@ Legende:
 ### ENUM
 
 ENUM ist eine Liste von Werten (val1, val2, ...) mit 65.535 möglichen und eineindeutigen Elementen.
-Dies kann man super brauchen, wenn man in einer Applikation z.B DropDown Menüs darstellen will. Z.B Attribut Status: ```Entwurf```, ```In Prüfung``` oder ```Freigegeben```. Wird von der Applikation ein Wert mitgegeben, welcher nicht in der ENUM Liste enthalten ist, wird einfach nichts eingefügt.
+Dies kann man super brauchen, wenn man in einer Applikation z.B DropDown Menüs darstellen will. Z.B Attribut Status: ```Entwurf```, ```In Prüfung``` oder ```Freigegeben```. Wird von der Applikation ein Wert mitgegeben, welcher nicht in der ENUM Liste enthalten ist, wird einfach nichts eingefügt. Dies kommt wieder der Daten Konsistenz zu gute.
 
 ### JSON                                                                                              |
 
@@ -63,7 +63,7 @@ Diese können nun von einer Applikation durch iteriert werden.
 
 ## Indexierung
 
-Ab 10'000 Datensätzen in einer Tabelle wird empfohlen die Daten zu indexieren. So kann man die performance erhöhen, wenn man z.B ```WHERE``` oder ```ORDER BY``` nutzt. Durch die Indexierung muss MySQL nicht mehr die ganze Tabelle durchforschen. Im Indizes zu erzeugen gibt es vier Indexierungstypen:
+Ab 10'000 Datensätzen in einer Tabelle wird empfohlen die Daten zu indexieren. So kann man die performance erhöhen, wenn man z.B ```WHERE``` oder ```ORDER BY``` nutzt. Durch die Indexierung muss MySQL nicht mehr die ganze Tabelle durchforschen. Um Indizes zu erzeugen gibt es vier Indexierungstypen:
 
 * Der **Primary Key** (meist eine ID) wird für die primäre Indexierung einer Tabelle genutzt. Das heisst, dass gewisse Daten, z.B Vorname, Nachname in der gleichen Zeile zusammengehören.
 
