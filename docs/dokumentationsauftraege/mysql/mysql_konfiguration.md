@@ -308,7 +308,7 @@ sudo ls /var/lib/mysql/schooltest
 
 #### mysql
 
-Diese Datenbank enthält diverse Informationen zum Server, wie z.B die Benutzer und deren Berechtigungen, sowie auch gewisse Logfiles und vieles mehr.
+Diese Datenbank enthält diverse Informationen zum Server, wie z.B die Benutzer und deren Berechtigungen (DB, Tabelle sowie Column Privilegien).
 
 #### sys
 
