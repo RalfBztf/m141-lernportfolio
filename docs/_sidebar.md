@@ -8,3 +8,4 @@
         * [MySQL Backup, Restore und Migration](dokumentationsauftraege/mysql/mysql_backup_restore_migration)
         * [MySQL Security](dokumentationsauftraege/mysql/mysql_security)
         * [MySQL Sakila](dokumentationsauftraege/mysql/mysql_sakila)
+        * [MySQL Chat App](dokumentationsauftraege/mysql/mysql_chat_app)

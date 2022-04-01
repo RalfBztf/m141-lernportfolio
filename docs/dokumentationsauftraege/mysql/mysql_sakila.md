@@ -27,15 +27,22 @@ SELECT COUNT(*) FROM film_text;
 
 ### Stored Procedures
 
-Mit Stored Procedures kann man eine oder mehrere Queries speichern und später wieder aufrufen. Dies ist hilfreich für grosse SQL Skripts, welche Sachen nacheinander und oft ausführen müssen. (z.B Daily Datenbankmutationen)
+Mit Stored Procedures kann man eine oder mehrere Queries speichern und später wieder aufrufen. Dies ist hilfreich für grosse SQL Skripts, welche Sachen nacheinander und oft ausführen müssen. (z.B Daily Datenbankmutationen). Eine Änderung des Source Codes ist dadurch auch nicht notwendig.
 
 #### Erstellen
 
+Simple ohne Übergabeparameter:
+
 ```sql
-CREATE PROCEDURE procedure_name
-AS
-sql_statement
-GO; 
+DELIMITER $$
+
+CREATE PROCEDURE test()
+READS SQL DATA
+BEGIN
+     SELECT * FROM Personen;
+END$$
+
+DELIMITER ;
 ```
 
 Ausführen:
@@ -58,6 +65,8 @@ SHOW PROCEDURE STATUS WHERE db = 'sakila';
 #### Beispiel film_in_stock
 
 ```sql
+DELIMITER $$
+
 CREATE PROCEDURE film_in_stock(IN p_film_id INT, IN p_store_id INT, OUT p_film_count INT)
 READS SQL DATA
 BEGIN
@@ -76,9 +85,10 @@ BEGIN
 END $$
 
 DELIMITER ;
-
-DELIMITER $$
 ```
+
+```DELIMITER $$``` definiert, dass Semikolons  den Befehl in der Shell nicht als fertig erkennen. So können (wie auch gewollt), mehrere SQL-Befehle nacheinander ausgeführt werden.
+Sobald der Delimiter (mit ```END $$```) beendet wird und mit ```DELIMITER ;``` wieder das Semikolon als Schlusszeichen gilt, ist auch die Query fertig.
 
 Die SP ```film_in_stock``` hat 3 Übergabeparameter. ```IN``` ist ein Übergabeparameter. (z.B p_store_id)  
 ```OUT``` heisst, dass der Wert aus der Prozedur zurückgegeben wird. Der Anfangswert ist NULL und nach der Prozedur für den Aufrufer sichtbar.
