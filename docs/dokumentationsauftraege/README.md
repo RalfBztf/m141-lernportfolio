@@ -9,3 +9,4 @@
 * [MySQL Security](dokumentationsauftraege/mysql/mysql_security)
 * [MySQL Sakila](dokumentationsauftraege/mysql/mysql_sakila)
 * [MySQL Chat App](dokumentationsauftraege/mysql/mysql_chat_app)
+* [MySQL Best practices](dokumentationsauftraege/mysql/mysql_best_practices)
