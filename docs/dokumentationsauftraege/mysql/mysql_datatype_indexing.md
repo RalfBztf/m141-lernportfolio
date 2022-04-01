@@ -63,7 +63,7 @@ Diese können nun von einer Applikation durch iteriert werden.
 
 ## Indexierung
 
-Ab 10'000 Datensätzen in einer Tabelle wird empfohlen die Daten zu indexieren. So kann man die performance erhöhen, wenn man z.B ```WHERE``` oder ```ORDER BY``` nutzt. Durch die Indexierung muss MySQL nicht mehr die ganze Tabelle durchforschen. Um Indizes zu erzeugen gibt es vier Indexierungstypen:
+Ab 10'000 Datensätzen (macht auch vorher schon Sinn) in einer Tabelle wird empfohlen die Daten zu indexieren. So kann man die performance erhöhen, wenn man z.B ```WHERE```, ```ORDER BY``` oder ```GROUP BY``` nutzt. Durch die Indexierung muss MySQL nicht mehr die ganze Tabelle durchforschen. Um Indizes zu erzeugen gibt es vier Indexierungstypen:
 
 * Der **Primary Key** (meist eine ID) wird für die primäre Indexierung einer Tabelle genutzt. Das heisst, dass gewisse Daten, z.B Vorname, Nachname in der gleichen Zeile zusammengehören.
 
