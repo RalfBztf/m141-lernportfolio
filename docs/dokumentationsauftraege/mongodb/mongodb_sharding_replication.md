@@ -24,7 +24,7 @@ mongod --replSet book --dbpath ./mongo2 --port 27012
 mongod --replSet book --dbpath ./mongo3 --port 27013
 ```
 
-### Replikatset initialisieren
+### Replikaset initialisieren
 
 ```bash
 mongosh --port 27011
@@ -59,7 +59,7 @@ Gibt ```1``` aus, also ok.
 mongo mongodb://localhost:27011,localhost:27012,localhost:27013/replicaSet=book
 ```
 
-Testdatem einfügen auf ```PRIMARY```
+Testdaten einfügen auf ```PRIMARY```
 
 ```javascript
 db.echo.insert({ say : 'HELLO!' })
@@ -141,7 +141,7 @@ mongo localhost:27020
 rs.initiate()
 ```
 
-Shard2 initialisieren:
+In einem anderen Terminal Shard2 initialisieren:
 
 ```bash
 mongo localhost:27021
@@ -329,7 +329,11 @@ sh.status()
         {  "_id" : "config",  "primary" : "config",  "partitioned" : true }
 ```
 
+Man sieht hier, MongoDB in ist die Version 5.0.8, Shard 1 läuft auf localhost:27020 und Shard 2 auf localhost:27021. Die Daten werden im Moment automatisch aufgeteilt.
+
 ### Sharding einrichten und Daten einfügen
+
+Sharding wird auf der DB ```populations``` aktiviert.
 
 ```javascript
 sh.enableSharding("populations")
@@ -348,6 +352,8 @@ sh.enableSharding("populations")
 	"operationTime" : Timestamp(1652727140, 30)
 }
 ```
+
+Die Collection ```cities``` wird nun verteilt. Mithilfe von ```hashed``` ist die Datenverteilung gleichmässiger und es ist unwahrscheinlicher, dass Dokumente mit einem ähnlichen Shard-Hashwert auf demselben Shard befinden.
 
 ```javascript
 sh.shardCollection("populations.cities", { "country": "hashed" })
@@ -422,9 +428,11 @@ Totals
  Shard shard1 contains 54.59% data, 55% docs in cluster, avg obj size on shard : 103B
 ```
 
+Die Daten sind relativ gleichmässig verteilt.
+
 ### Anwenden
 
-Das Routing wird nun automatisch vom Cluster übernommen.
+Das Routing wird nun automatisch vom Cluster übernommen, damit man beim richtigen Datensatz landet. Hier könnte man natürlich auch noch Indexe erzeugen. Im Moment werden COLLSCAN (Collection Scan) durchgeführt, was viel Leistung braucht.
 
 ```javascript
 db.cities.find().explain()
