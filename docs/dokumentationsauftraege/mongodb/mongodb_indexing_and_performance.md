@@ -333,3 +333,46 @@ db.phones.explain("executionStats").find({display: "+1 800-5650001"})
 ```
 
 Nun wurde der Index (```IXSCAN```) ausgeführt innert einer Millisekunde und musste auch keine Dokumente mehr durchsuchen, da alles indexiert ist.
+
+## Best practices DB Design
+
+### Beispiel
+
+Man sollte Daten normalisieren. Z.B bei einer solcher realtionalen DB:
+
+![relational](relational-user-model.png)
+
+Man könnte das auch genau so in MongoDB mit Referenzen abbilden, nur leidet da massiv die Performance. Besser ist es in MongoDB diese 3 Tabellen alle in eine zunehmen. Dies nennt man Embedded/Nested Documents.
+
+```json
+{
+    "first_name": "Paul",
+    "surname": "Miller",
+    "cell": "447557505611",
+    "city": "London",
+    "location": [45.123, 47.232],
+    "profession": ["banking", "finance", "trader"],
+    "cars": [
+        {
+            "model": "Bentley",
+            "year": 1973
+        },
+        {
+            "model": "Rolls Royce",
+            "year": 1965
+        }
+    ]
+}
+```
+
+Hier muss man aber aufpassen das man nicht zu viel Daten einfügt. Es wird schnell unübersichtlich und unperformant. Teils (z.B bei Logmessages von Systemen) lohnt es sich vielleicht doch die Daten in externe Tabellen auszulagern. Diese kann man mit ```$lookup``` verbinden. (Wie JOINs in SQL)
+
+## Beziehungen
+
+* One-to-One - Key-Value Pair in Documents bevorzugen (```{"key" : "value"}```)
+* One-to-Few - Embedding bevorzugen (```"profession": ["banking", "finance", "trader"]```)
+* One-to-Many - Embedding bevorzugen (```"profession": ["banking", "finance", "trader"]```)
+* One-to-Squillions - Referenzierung bevorzugen (```$lookup```)
+* Many-to-Many - Referenzierung bevorzugen (```$lookup```)
+
+* [Weitere Infos, Regeln und Beispiele](https://www.mongodb.com/developer/article/mongodb-schema-design-best-practices/)

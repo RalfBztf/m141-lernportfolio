@@ -11,6 +11,7 @@
             * [MySQL Sakila](dokumentationsauftraege/mysql/mysql_sakila)
             * [MySQL Chat App](dokumentationsauftraege/mysql/mysql_chat_app)
             * [MySQL Best practices](dokumentationsauftraege/mysql/mysql_best_practices)
+            * [MySQL Replikation](dokumentationsauftraege/mysql/mysql_replication)
         * [MongoDB](dokumentationsauftraege/mongodb/)
             * [Installation, Konfiguration und Recherche](dokumentationsauftraege/mongodb/mongodb_installation_konfiguration)
             * [Erste Schritte](dokumentationsauftraege/mongodb/mongodb_erste_schritte)
